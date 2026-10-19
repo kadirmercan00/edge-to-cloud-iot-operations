@@ -7,29 +7,29 @@ This document details the multi-tier engineering architecture of the **Edge-to-C
 ## 1. End-to-End Topology
 
 ```mermaid
-graph TD
-    subgraph Edge Layer [Field Edge Devices]
-        A[BLE Beacons & ToF Nodes] -->|BLE Advertisements| B[ESP32 Gateway Node]
-        C[Field Asset Unit] -->|Sensors / UART| C
-        D[Staff Smart Card] -->|BLE Proximity & RSSI| C
+flowchart TD
+    subgraph EdgeLayer ["Field Edge Devices"]
+        A["BLE Beacons & ToF Nodes"] -->|"BLE Advertisements"| B["ESP32 Gateway Node"]
+        C["Field Asset Unit"]
+        D["Staff Smart Card"] -->|"BLE Proximity & RSSI"| C
     end
 
-    subgraph Transport Layer [Network & Security]
-        B -->|MQTTS / TLS 1.2 Port 8883| E[AWS IoT Core Broker]
-        C -->|MQTTS / TLS 1.2 X.509 Auth| E
+    subgraph TransportLayer ["Network & Security"]
+        B -->|"MQTTS / TLS 1.2 (Port 8883)"| E["AWS IoT Core Broker"]
+        C -->|"MQTTS / TLS 1.2 X.509 Auth"| E
     end
 
-    subgraph Cloud Layer [Serverless Processing]
-        E -->|IoT SQL Rules| F[Event Normalizer Lambda]
-        F -->|Time-Series Ingestion| G[(Amazon DynamoDB)]
-        F -->|State Notifications| H[Amazon SNS / SQS]
-        F -->|Critical Thresholds| I[Predictive Engine Service]
+    subgraph CloudLayer ["Serverless Processing"]
+        E -->|"IoT SQL Rules"| F["Event Normalizer Lambda"]
+        F -->|"Time-Series Ingestion"| G[("Amazon DynamoDB")]
+        F -->|"State Notifications"| H["Amazon SNS / SQS"]
+        F -->|"Critical Thresholds"| I["Predictive Engine Service"]
     end
 
-    subgraph Analytics & Web [Operations Interface]
-        G -->|REST / WebSocket API| J[API Gateway]
-        J -->|JSON Feeds| K[Operations Dashboard]
-        I -->|Health State Scoring| K
+    subgraph OperationsInterface ["Operations Interface"]
+        G -->|"REST / WebSocket API"| J["Amazon API Gateway"]
+        J -->|"JSON Feeds"| K["Operations Dashboard"]
+        I -->|"Health State Scoring"| K
     end
 ```
 

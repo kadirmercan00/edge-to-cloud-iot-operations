@@ -38,31 +38,34 @@ This repository presents an authentic **Full-Stack, Hardware-to-Cloud Industrial
 ## 🏛️ System Architecture: From Silicon to Cloud
 
 ```mermaid
-graph LR
+flowchart LR
     subgraph Hardware ["Custom Hardware (Altium PCB)"]
-        HW1[Wearable Smart Badge PCB]
-        HW2[Anchor Telemetry Nodes]
-        HW3[BLE ToF Gateways]
+        HW1["Wearable Smart Badge PCB"]
+        HW2["Anchor Telemetry Nodes"]
+        HW3["BLE ToF Gateways"]
     end
 
     subgraph Edge ["Firmware Layer (C++17 / FreeRTOS)"]
-        FW1[Smart Card Firmware: TFT UI + LIS2DH12 IMU]
-        FW2[Anchor Telemetry Firmware: Sensor Loops]
-        FW3[Gateway Firmware: NimBLE Scanner]
+        FW1["Smart Card: TFT UI + LIS2DH12 IMU"]
+        FW2["Anchor Telemetry: Sensor Loops"]
+        FW3["Gateway Firmware: NimBLE Scanner"]
     end
 
     subgraph Security ["Secure Transport"]
-        FW1 & FW2 & FW3 -->|TLS 1.2 / X.509 mTLS Port 8883| AWS_IOT[AWS IoT Core Broker]
+        FW1 -->|"TLS 1.2 / X.509 mTLS (Port 8883)"| AWS_IOT["AWS IoT Core Broker"]
+        FW2 -->|"TLS 1.2 / X.509 mTLS (Port 8883)"| AWS_IOT
+        FW3 -->|"TLS 1.2 / X.509 mTLS (Port 8883)"| AWS_IOT
     end
 
     subgraph Cloud ["Serverless Cloud Pipeline"]
-        AWS_IOT -->|Topic Rules| LAMBDA[Event Normalizer Lambda]
-        LAMBDA --> DYNAMO[(Amazon DynamoDB)]
-        LAMBDA --> ML[Predictive Health Engine]
+        AWS_IOT -->|"Topic Rules"| LAMBDA["Event Normalizer Lambda"]
+        LAMBDA --> DYNAMO[("Amazon DynamoDB")]
+        LAMBDA --> ML["Predictive Health Engine"]
     end
 
     subgraph UI ["Operations Center"]
-        DYNAMO & ML --> DASH[Live Operations Dashboard]
+        DYNAMO --> DASH["Live Operations Dashboard"]
+        ML --> DASH
     end
 
     HW1 -.-> FW1
