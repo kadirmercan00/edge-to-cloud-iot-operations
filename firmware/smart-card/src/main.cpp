@@ -94,6 +94,9 @@ static int currentTaskIdx = -1;
 // SECTION 3: HARDWARE INITIALIZATION
 // ═══════════════════════════════════════════════════════════════════════════
 
+WiFiClientSecure mqttNet;
+PubSubClient     mqttClient(mqttNet);
+
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 CRGB leds[LED_COUNT];
 
@@ -371,9 +374,6 @@ void updateLEDBlink(CRGB color) {
 // ═══════════════════════════════════════════════════════════════════════════
 // SECTION 6: MULTI-WiFi CONNECTION
 // ═══════════════════════════════════════════════════════════════════════════
-
-WiFiClientSecure mqttNet;
-PubSubClient     mqttClient(mqttNet);
 
 bool connectMultiWiFi() {
     if (WiFi.status() == WL_CONNECTED) return true;
