@@ -1,0 +1,128 @@
+﻿/* ============================================================
+   EDGE-OPS AI - Premium Light Glassmorphism Theme
+   Curated HSL Palette, smooth micro-animations & premium shadows
+   ============================================================ */
+
+:root {
+  /* HSL Tailored Light Theme Colors */
+  --bg-app: #F4F6F9;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-topbar: rgba(255, 255, 255, 0.90);
+  --bg-input: #F8FAFC;
+  --bg-sidebar: #1E293B;
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+
+  --border: rgba(226, 232, 240, 0.8);
+  --border-focus: #4F46E5;
+
+  /* Harmonious Accents */
+  --accent: #4F46E5;
+  --accent-hover: #3730A3;
+  --accent-light: #EEF2FF;
+  
+  --accent-blue: #2563EB;
+  --accent-blue-light: #EFF6FF;
+  
+  --accent-green: #10B981;
+  --accent-green-light: #ECFDF5;
+  
+  --accent-amber: #F59E0B;
+  --accent-amber-light: #FFFBEB;
+  
+  --accent-red: #EF4444;
+  --accent-red-light: #FEF2F2;
+
+  /* Premium Multi-layered Shadows */
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.06), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+
+  /* Radius System */
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+
+  /* Animation */
+  --tr: .25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glassmorphism card structures */
+.card,
+.kpi-card,
+.top-kpi,
+.Asset-mini-card,
+.wc-mini-card,
+.rest-sensor-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px) saturate(190%);
+  -webkit-backdrop-filter: blur(12px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius) !important;
+  box-shadow: var(--shadow-sm) !important;
+  transition: transform var(--tr), box-shadow var(--tr), border-color var(--tr) !important;
+}
+
+.card:hover,
+.kpi-card:hover,
+.top-kpi:hover,
+.Asset-mini-card:hover,
+.wc-mini-card:hover,
+.rest-sensor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg) !important;
+  border-color: rgba(79, 70, 229, 0.2);
+}
+
+/* Custom visual highlights on modules */
+.module-section-header {
+  border-bottom: 2px solid rgba(226, 232, 240, 0.6) !important;
+}
+
+/* Micro-animations and interaction enhancements */
+.btn {
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--tr) !important;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4) !important;
+}
+
+.nav-item {
+  border-radius: 10px !important;
+  transition: all var(--tr) !important;
+}
+
+/* Custom styling for topbar */
+.topbar {
+  background: var(--bg-topbar) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+}
+
+/* Level indicator modernizations */
+.level-bar-track,
+.wc-mini-bar,
+.battery-track {
+  background: rgba(226, 232, 240, 0.7);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.level-bar-fill,
+.wc-mini-fill,
+.battery-fill {
+  border-radius: 999px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+

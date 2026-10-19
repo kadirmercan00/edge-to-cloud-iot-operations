@@ -1,0 +1,42 @@
+# ═══════════════════════════════════════════════════════
+# .gitignore — Edge-to-Cloud IoT Operations Platform
+# ═══════════════════════════════════════════════════════
+
+# Build artifacts
+.pio/
+.vscode/
+build/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+
+# Secrets & credentials (NEVER commit these)
+**/certs.h
+**/*-certs.h
+*.pem
+*.key
+.env
+.env.local
+
+# ML model artifacts (too large for git)
+ml/artifacts/*.pkl
+ml/artifacts/*.joblib
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node
+node_modules/
+
+# Logs
+*.log

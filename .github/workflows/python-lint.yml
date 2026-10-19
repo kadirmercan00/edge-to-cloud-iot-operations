@@ -1,0 +1,22 @@
+name: Python Lint & Test
+on:
+  push:
+    paths: ['cloud/**', 'ml/**', 'tools/**']
+  pull_request:
+    paths: ['cloud/**', 'ml/**', 'tools/**']
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install flake8 pytest
+          pip install -r cloud/lambda/requirements.txt
+          pip install -r ml/requirements.txt
+      - name: Lint with flake8
+        run: flake8 cloud/ ml/ tools/ --max-line-length=120 --ignore=E501,W503

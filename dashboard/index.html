@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Giriş — EDGE-OPS AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/app.css"/>
+</head>
+<body>
+
+<div class="login-root">
+
+  <!-- Sol görsel panel -->
+  <div class="login-visual">
+    <div class="login-brand">
+      <div class="login-brand-name">EDGE-OPS<span class="login-brand-accent"> AI</span></div>
+      <div class="login-brand-sub">PROTechnic Asset Management</div>
+
+      <div class="login-status" style="justify-content:center;">
+        <div class="login-status-dot"></div>
+        <span class="login-status-text">System Online</span>
+      </div>
+
+      <div style="margin-top:40px; display:flex; flex-direction:column; gap:14px; width:100%; max-width:260px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,.05);border-radius:10px;border:1px solid rgba(255,255,255,.08);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:.72rem;color:#94A3B8;">AWS IoT Core</div>
+            <div style="font-size:.78rem;color:#E2E8F0;font-weight:600;">me-central-1</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,.05);border-radius:10px;border:1px solid rgba(255,255,255,.08);">
+          <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:.72rem;color:#94A3B8;">DynamoDB</div>
+            <div style="font-size:.78rem;color:#E2E8F0;font-weight:600;">EDGE-OPS_DB</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:rgba(255,255,255,.05);border-radius:10px;border:1px solid rgba(255,255,255,.08);">
+          <div id="modeIndicator" style="width:8px;height:8px;border-radius:50%;background:#F59E0B;flex-shrink:0;"></div>
+          <div>
+            <div style="font-size:.72rem;color:#94A3B8;">Veri Modu</div>
+            <div id="modeText" style="font-size:.78rem;color:#E2E8F0;font-weight:600;">Mock</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:absolute;bottom:24px;font-size:.65rem;color:#475569;">
+      EDGE-OPS AI v1.0.0
+    </div>
+  </div>
+
+  <!-- Sağ form paneli -->
+  <div class="login-form-panel">
+    <div class="login-form-box">
+      <div class="login-form-title">Hoş Geldiniz</div>
+      <div class="login-form-sub">Hesabınıza giriş yapın</div>
+
+      <div id="loginAlert" class="login-alert"></div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label class="form-label">Kullanıcı Adı</label>
+          <input id="username" type="text" class="login-input" placeholder="kullanici_adi" autocomplete="username" required/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Şifre</label>
+          <div class="login-input-group">
+            <input id="password" type="password" class="login-input" placeholder="••••••••" autocomplete="current-password" required style="padding-right:40px;"/>
+            <button type="button" class="login-pw-toggle" id="pwToggle" title="Şifreyi göster">
+              <svg id="eyeIcon" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span id="btnText">Giriş Yap</span>
+          <span id="btnSpinner" class="spinner" style="display:none;border-color:rgba(255,255,255,.3);border-top-color:#fff;"></span>
+        </button>
+      </form>
+
+
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+
+<script src="assets/js/auth.js"></script>
+<script>
+  // Mod göstergesi
+  if (!CONFIG.MOCK_MODE) {
+    document.getElementById('modeIndicator').style.background = '#22C55E';
+    document.getElementById('modeText').textContent = 'Canlı AWS';
+  }
+
+  // Zaten giriş yapmışsa dashboard'a yönlendir
+  Auth.redirectIfAuthenticated();
+
+  // Şifre göster/gizle
+  const pwToggle = document.getElementById('pwToggle');
+  const pwInput  = document.getElementById('password');
+  const eyeIcon  = document.getElementById('eyeIcon');
+  pwToggle.addEventListener('click', () => {
+    const show = pwInput.type === 'password';
+    pwInput.type = show ? 'text' : 'password';
+    eyeIcon.innerHTML = show
+      ? '<path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>'
+      : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+  });
+
+  // Form submit
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const alert    = document.getElementById('loginAlert');
+    const btnText  = document.getElementById('btnText');
+    const spinner  = document.getElementById('btnSpinner');
+    const btn      = document.getElementById('loginBtn');
+
+    alert.className = 'login-alert';
+    alert.textContent = '';
+
+    if (!username || !password) {
+      alert.className = 'login-alert error';
+      alert.textContent = 'Kullanıcı adı ve şifre gereklidir.';
+      return;
+    }
+
+    btn.disabled = true;
+    btnText.textContent = 'Giriş yapılıyor...';
+    spinner.style.display = 'inline-block';
+
+    try {
+      await Auth.login(username, password, false);
+      window.location.href = 'dashboard.html';
+    } catch (err) {
+      alert.className = 'login-alert error';
+      alert.textContent = err.message || 'Kullanıcı adı veya şifre hatalı.';
+      btn.disabled = false;
+      btnText.textContent = 'Giriş Yap';
+      spinner.style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
+

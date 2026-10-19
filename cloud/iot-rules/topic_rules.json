@@ -1,0 +1,37 @@
+{
+  "rules": [
+    {
+      "ruleName": "RouteFieldTelemetryToNormalizer",
+      "sql": "SELECT *, topic(3) as asset_id, timestamp() as ingestion_time FROM 'iot/assets/+/telemetry'",
+      "description": "Routes all live sensor telemetry from edge nodes to the serverless Lambda normalizer",
+      "actions": [
+        {
+          "lambda": {
+            "functionArn": "arn:aws:lambda:eu-central-1:123456789012:function:iot-event-normalizer"
+          }
+        }
+      ],
+      "errorAction": {
+        "republish": {
+          "topic": "iot/errors/deadletter",
+          "roleArn": "arn:aws:iam::123456789012:role/IoTRuleRepublishRole"
+        }
+      }
+    },
+    {
+      "ruleName": "ArchiveCriticalAlertsToDynamoDB",
+      "sql": "SELECT device_id, alert_type, severity, metrics, timestamp FROM 'iot/alerts/+' WHERE severity = 'CRITICAL'",
+      "description": "Directly archives critical failure alerts to high-priority audit storage",
+      "actions": [
+        {
+          "dynamoDBv2": {
+            "roleArn": "arn:aws:iam::123456789012:role/IoTDynamoDBInsertRole",
+            "putItem": {
+              "tableName": "iot-critical-alerts"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,284 @@
+﻿/* ============================================================
+   FAZ 1 — Login Page (Tactical Theme v2)
+   ============================================================ */
+
+.login-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-void);
+  padding: 24px;
+}
+
+/* ======================== GÖRSEL / BAŞLIK ======================== */
+.login-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+/* Karmaşık görsel efektleri gizle */
+.visual-glow, .shaft-wrap, .corner, .status-bar, .brand-sys-id, .brand-desc {
+  display: none !important;
+}
+
+.brand-logo {
+  width: 60px; height: 60px;
+  margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.brand-logo-hex {
+  width: 100%; height: 100%;
+  border: 1px solid var(--border-active);
+  border-radius: 12px;
+  background: rgba(0,200,255,0.05);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,200,255,0.1);
+}
+.brand-logo svg { width: 30px; height: 30px; stroke: var(--cyan); }
+
+.brand-tagline {
+  font-family: var(--font-ui);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  text-align: center;
+  line-height: 1.2;
+}
+.brand-tagline .accent {
+  color: var(--cyan);
+}
+
+/* ======================== SAĞ PANEL: FORM ======================== */
+.login-form-panel {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.login-box {
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-header {
+  margin-bottom: 36px;
+}
+.login-header-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  opacity: .8;
+}
+.login-header h1 {
+  font-family: var(--font-ui);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+.login-header p {
+  font-size: 0.87rem;
+  color: var(--text-secondary);
+}
+
+/* Form */
+.form-group { margin-bottom: 18px; }
+
+.form-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.input-wrapper { position: relative; }
+
+.input-icon {
+  position: absolute;
+  left: 13px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: color var(--t-fast);
+  display: flex;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 44px 12px 42px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.92rem;
+  font-family: var(--font-mono);
+  outline: none;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+}
+.form-input::placeholder { color: var(--text-muted); font-size: 0.85rem; }
+.form-input:focus {
+  border-color: var(--border-active);
+  background: var(--bg-elevated);
+  box-shadow: 0 0 0 3px rgba(0,200,255,0.1), var(--cyan-glow-sm);
+}
+.form-input:focus ~ .input-icon,
+.input-wrapper:focus-within .input-icon { color: var(--cyan); }
+
+.pwd-toggle {
+  position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: var(--text-muted); cursor: pointer;
+  padding: 4px; display: flex;
+  transition: color var(--t-fast);
+}
+.pwd-toggle:hover { color: var(--text-primary); }
+
+/* Extras */
+.form-extras {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 26px;
+}
+.checkbox-label {
+  display: flex; align-items: center;
+  gap: 8px; font-size: 0.83rem;
+  color: var(--text-secondary);
+  cursor: pointer; user-select: none;
+  font-family: var(--font-mono);
+}
+.checkbox-label input[type="checkbox"] {
+  width: 14px; height: 14px;
+  accent-color: var(--cyan);
+  cursor: pointer;
+}
+.forgot-link {
+  font-size: 0.82rem; color: var(--cyan);
+  text-decoration: none; font-family: var(--font-mono);
+  opacity: .8; transition: opacity var(--t-fast);
+}
+.forgot-link:hover { opacity: 1; }
+
+/* Submit */
+.btn-login {
+  width: 100%; padding: 13px;
+  font-family: var(--font-ui);
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cyan);
+  background: transparent;
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: all var(--t-fast);
+  box-shadow: inset 0 0 20px rgba(0,200,255,0.04);
+}
+.btn-login::before {
+  content:''; position:absolute;
+  inset:0; background: var(--cyan-dim);
+  opacity:0; transition: opacity var(--t-fast);
+}
+.btn-login:hover {
+  box-shadow: var(--cyan-glow);
+  transform: translateY(-1px);
+}
+.btn-login:hover::before { opacity:1; }
+.btn-login:active { transform:none; }
+.btn-login:disabled { opacity:.4; cursor:not-allowed; transform:none; }
+
+.btn-login-text,.spinner { position:relative; z-index:1; }
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(0,200,255,0.2);
+  border-top-color: var(--cyan);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: none;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* Alert */
+.alert {
+  display: none; align-items: flex-start;
+  gap: 9px; padding: 11px 13px;
+  border-radius: var(--radius-sm);
+  font-size: 0.83rem; margin-bottom: 18px;
+  font-family: var(--font-mono);
+}
+.alert.visible { display: flex; }
+.alert-error   {
+  background: rgba(255,61,90,0.08);
+  border: 1px solid rgba(255,61,90,0.3);
+  color: #ff8099;
+}
+.alert-success {
+  background: rgba(0,229,160,0.08);
+  border: 1px solid rgba(0,229,160,0.3);
+  color: #00e5a0;
+}
+
+/* Demo kartları */
+.demo-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--t-fast);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+.demo-card:hover {
+  border-color: var(--border-active);
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  box-shadow: var(--cyan-glow-sm);
+}
+.demo-creds { display:flex; align-items:center; gap:10px; }
+.demo-user { color: var(--cyan); font-weight:600; }
+.demo-pass { color: var(--text-muted); }
+
+/* Güvenlik notu */
+.security-note {
+  display: flex; align-items: center;
+  gap: 8px; padding: 10px 14px;
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 20px;
+  font-family: var(--font-mono);
+}
+.security-note svg { flex-shrink:0; color: var(--cyan); opacity:.6; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-form-panel { padding: 32px 24px; }
+  .login-root { padding: 16px; }
+}
+

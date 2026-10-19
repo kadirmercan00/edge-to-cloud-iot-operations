@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Raporlar — EDGE-OPS AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/app.css"/>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-name">EDGE-OPS <span style="color:#e35348;">AI</span></div>
+      <div class="sidebar-brand-sub">PROTechnic Asset Management</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Ana</div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Dashboard
+        </a>
+        <a href="assets.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="6" x2="12" y2="10"/><polyline points="9 8 12 6 15 8"/></svg>
+          Varlıklar & Makineler
+        </a>
+        <a href="staff.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          Personel
+        </a>
+        <a href="sensors.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 3h6v4H9z"/><path d="M8 7h8l2 5-2 9H8l-2-9 2-5z"/><circle cx="12" cy="16" r="2.5"/></svg>
+          Sensörler
+        </a>
+      </nav>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Yönetim</div>
+      <nav class="sidebar-nav">
+        <a href="add-asset.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Endüstriyel Varlık Ekle
+        </a>
+        <a href="add-staff.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+          Personel Ekle
+        </a>
+        
+      </nav>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Analiz</div>
+      <nav class="sidebar-nav">
+        <a href="reports.html" class="nav-item active">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Raporlar
+        </a>
+        <a href="timeline.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/><circle cx="12" cy="7" r="3"/></svg>
+          Zaman Çizelgesi
+        </a>
+      </nav>
+    </div>
+    <div class="sidebar-footer">
+      <div class="sidebar-version">v1.0.0</div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item" id="logoutBtn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Çıkış
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Raporlar</span>
+    </div>
+    <div class="topbar-right">
+      <div class="period-selector">
+        <button class="period-btn active" data-period="week">Bu Hafta</button>
+        <button class="period-btn" data-period="month">Bu Ay</button>
+        <button class="period-btn" data-period="quarter">Son 3 Ay</button>
+      </div>
+      <button class="btn btn-secondary btn-sm" id="exportExcelBtn" style="margin-left: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; height: 32px; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background: var(--bg-card); color: var(--text-primary); cursor: pointer; font-weight: 500; font-family: inherit;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: middle;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Excel'e Aktar
+      </button>
+      <span class="topbar-clock mono" id="clock">--:--:--</span>
+      <div class="topbar-user" id="userAvatar">AD</div>
+    </div>
+  </header>
+
+  <!-- ANA İÇERİK -->
+  <main class="main-content">
+
+    <!-- KPI Bant (Endüstriyel Varlık) -->
+    <div class="kpi-grid report-kpi sec-Asset" id="reportKpi">
+
+    <!-- Grafik Satırı 1 (Endüstriyel Varlık) -->
+    <div class="report-charts-row two-col mb-24 sec-Asset">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Aylık Arıza / Çözüm</span>
+          <span class="text-xs text-muted">Son 6 ay</span>
+        </div>
+        <div class="card-body" style="padding-top:12px;">
+          <div class="chart-container" style="height:220px;">
+            <canvas id="monthlyChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Arıza Tipi Dağılımı</span>
+          <span class="text-xs text-muted">Seçili dönem</span>
+        </div>
+        <div class="card-body" style="padding-top:12px;">
+          <div class="chart-container" style="height:220px;">
+            <canvas id="doughnutChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Grafik Satırı 2 (Endüstriyel Varlık) -->
+    <div class="report-charts-row two-eq mb-24 sec-Asset">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Müdahale Süresi Dağılımı</span>
+          <span class="text-xs text-muted">Süre grupları (dk)</span>
+        </div>
+        <div class="card-body" style="padding-top:12px;">
+          <div class="chart-container" style="height:200px;">
+            <canvas id="responseTimeChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Günlük Görev Yoğunluğu</span>
+          <span class="text-xs text-muted">Son 7 gün</span>
+        </div>
+        <div class="card-body" style="padding-top:12px;">
+          <div class="chart-container" style="height:200px;">
+            <canvas id="dailyChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Görev Tablosu -->
+    <div class="card mb-24">
+      <div class="card-header">
+        <span class="card-title" id="tableTitle">Görev Listesi</span>
+        <div class="search-wrap" style="min-width:200px;">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="search-input" id="taskSearch" placeholder="Görev ara..."/>
+        </div>
+      </div>
+      <div class="card-body" style="padding:0;">
+        <div style="overflow-x:auto;">
+          <table class="data-table">
+            <thead id="taskTableHeader">
+              <tr>
+                <th>Task ID</th>
+                <th>Endüstriyel Varlık</th>
+                <th>Arıza Tipi</th>
+                <th>Personel</th>
+                <th>Oluşturma</th>
+                <th>Çözüm</th>
+                <th>Süre</th>
+                <th>Durum</th>
+              </tr>
+            </thead>
+            <tbody id="taskTableBody">
+              <tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text-muted);">Yükleniyor…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="assets/js/config.js?v=1.2"></script>
+<script>if(CONFIG.MOCK_MODE){document.write('<script src="assets/js/mock.js?v=1.2"><\/script>')}</script>
+<script src="assets/js/sanitize.js?v=1.2"></script>
+<script src="assets/js/auth.js?v=1.2"></script>
+<script src="assets/js/shell.js?v=1.2"></script>
+<script src="assets/js/api.js?v=1.2"></script>
+<script src="assets/js/notify.js?v=1.2"></script>
+<script src="assets/js/reports.js?v=1.3"></script>
+</body>
+</html>
+

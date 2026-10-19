@@ -1,0 +1,46 @@
+Edge-Ops Industrial ML v2 Training Report
+Generated: 2026-05-05T17:06:45
+Data directory: datasets/industrial_telemetry_features
+Rows used: 11519
+
+Class distribution:
+  0 (Normal): 4293
+  1 (Warning): 1890
+  2 (Critical): 5336
+
+Accuracy: 0.9965
+
+Classification report:
+              precision    recall  f1-score   support
+
+      Normal     0.9954    1.0000    0.9977       859
+     Warning     0.9973    0.9841    0.9907       378
+    Critical     0.9972    0.9981    0.9977      1067
+
+    accuracy                         0.9965      2304
+   macro avg     0.9966    0.9941    0.9953      2304
+weighted avg     0.9965    0.9965    0.9965      2304
+
+
+Confusion matrix rows=true, columns=predicted [0, 1, 2]:
+[[ 859    0    0]
+ [   3  372    3]
+ [   1    1 1065]]
+
+Feature importance:
+          Feature  Importance
+    Temp_RollMean    0.245530
+      Temperature    0.210778
+        Vibration    0.102447
+     Vib_RollMean    0.089532
+       Temp_Trend    0.082315
+   Temp_Vib_Ratio    0.066391
+        Vib_Trend    0.042964
+      Vib_RollStd    0.041350
+     Temp_RollStd    0.027588
+     Load_RollStd    0.021287
+Load_When_Running    0.020035
+       Load_Trend    0.013249
+             Load    0.013065
+    Load_RollMean    0.012959
+         MotorRun    0.010509

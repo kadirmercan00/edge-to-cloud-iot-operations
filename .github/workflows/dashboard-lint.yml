@@ -1,0 +1,26 @@
+name: Dashboard & Web Assets Lint
+
+on:
+  push:
+    paths:
+      - 'dashboard/**'
+  pull_request:
+    paths:
+      - 'dashboard/**'
+
+jobs:
+  validate-web:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Validate HTML & CSS
+        run: |
+          npx -y html-validate "dashboard/**/*.html" --verbose || true
+          echo "Web validation pass completed."

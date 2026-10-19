@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ana Kontrol Merkezi — EDGE-OPS AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/css/app.css"/>
+  <link rel="stylesheet" href="assets/css/theme.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* SCADA IoT Dashboard Layout Styles */
+    .dashboard-scada-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .scada-main-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+
+
+    /* Charts Layout */
+    .charts-container {
+      display: grid;
+      grid-template-columns: 280px 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 1200px) {
+      .charts-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .chart-card {
+      background: var(--bg-card, #fff);
+      border: 1px solid var(--border-color, #e2e8f0);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .chart-wrapper {
+      position: relative;
+      height: 180px;
+      width: 100%;
+    }
+    
+    /* Console card */
+    .console-card {
+      background: var(--bg-card, #fff);
+      border: 1px solid var(--border-color, #e2e8f0);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .console-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-brand-name">EDGE-OPS <span style="color:#e35348;">AI</span></div>
+      <div class="sidebar-brand-sub">Facility Intelligence Platform</div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Genel Bakış</div>
+      <nav class="sidebar-nav">
+        <a href="overview.html" class="nav-item active">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Kontrol Merkezi
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">PROTechnic</div>
+      <nav class="sidebar-nav">
+        <a href="dashboard.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="6" x2="12" y2="10"/><polyline points="9 8 12 6 15 8"/></svg>
+          Endüstriyel Varlık Dashboard
+        </a>
+        <a href="assets.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>
+          Varlıklar & Makineler
+        </a>
+        <a href="staff.html" class="nav-item">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          Personel
+        </a>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-version">v1.0.0</div>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item" id="logoutBtn">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Çıkış
+        </a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-title">Kontrol Merkezi</span>
+      <span class="topbar-breadcrumb" id="lastUpdate">— —</span>
+    </div>
+    <div class="topbar-right">
+      <span id="modeBadge" class="topbar-badge mock">MOCK</span>
+      <span class="topbar-clock mono" id="clock">--:--:--</span>
+      <div class="topbar-user" id="userAvatar">AD</div>
+    </div>
+  </header>
+
+  <!-- ANA İÇERİK -->
+  <main class="main-content">
+
+    <!-- Üst KPI şeridi -->
+    <div class="top-kpi-strip" id="topKpiStrip">
+      <div class="top-kpi">
+        <div class="top-kpi-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: -2px; margin-right: 4px; display: inline-block;"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="2"/></svg>Toplam Endüstriyel Varlık</div>
+        <div class="top-kpi-value" id="kElTotal">—</div>
+        <div class="top-kpi-sub">Kayıtlı</div>
+      </div>
+      <div class="top-kpi" id="kElFaultBox">
+        <div class="top-kpi-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: -2px; margin-right: 4px; display: inline-block; color: var(--accent-red);"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>Aktif Arıza</div>
+        <div class="top-kpi-value" id="kElFault">—</div>
+        <div class="top-kpi-sub">Endüstriyel Varlık</div>
+      </div>
+      <div class="top-kpi">
+        <div class="top-kpi-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: -2px; margin-right: 4px; display: inline-block;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Personel</div>
+        <div class="top-kpi-value" id="kElStaff">—</div>
+        <div class="top-kpi-sub">Aktif</div>
+      </div>
+      <div class="top-kpi">
+        <div class="top-kpi-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: -2px; margin-right: 4px; display: inline-block;"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>Toplam Sensör</div>
+        <div class="top-kpi-value" id="kWcTotal">—</div>
+        <div class="top-kpi-sub">İzleniyor</div>
+      </div>
+      <div class="top-kpi" id="kWcCritBox">
+        <div class="top-kpi-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: -2px; margin-right: 4px; display: inline-block; color: var(--accent-red);"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>WC Kritik</div>
+        <div class="top-kpi-value" id="kWcCrit">—</div>
+        <div class="top-kpi-sub">Görev oluştu</div>
+      </div>
+      <div class="top-kpi">
+        <div class="top-kpi-label"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: -2px; margin-right: 4px; display: inline-block;"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Açık Görev</div>
+        <div class="top-kpi-value" id="kTasks">—</div>
+        <div class="top-kpi-sub">Toplam</div>
+      </div>
+    </div>
+
+    <div class="dashboard-scada-grid">
+
+      <!-- Sağ Panel: Grafikler, Durum Tabloları ve Aktiviteler -->
+      <div class="scada-main-panel">
+        
+        <!-- Grafikler (Çiftli Grafik Alanı) -->
+        <div class="charts-container">
+
+          <!-- Hızlı Kontroller -->
+          <div class="console-card">
+            <div>
+              <div class="card-header" style="margin-bottom:8px;">
+                <span class="card-title" style="font-size:0.85rem;"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:6px;display:inline-block;"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/></svg>Hızlı Konsol</span>
+              </div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); line-height: 1.45;">Tesis genelinde acil aksiyon veya komut gönderme paneli.</div>
+            </div>
+            <div class="console-grid">
+              <a href="timeline.html" class="btn btn-ghost" style="padding: 6px 0; font-size: 0.75rem; text-align: center; display: block; width: 100%; border: 1px solid var(--border-color); text-decoration: none;">Zaman Çizelgesi</a>
+              <a href="reports.html" class="btn btn-ghost" style="padding: 6px 0; font-size: 0.75rem; text-align: center; display: block; width: 100%; border: 1px solid var(--border-color); text-decoration: none;">Raporlar</a>
+            </div>
+          </div>
+
+          <!-- Grafik 1: Haftalık Trend -->
+          <div class="chart-card">
+            <div class="card-header" style="margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+              <span class="card-title" style="font-size:0.8rem; font-weight:700;"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;display:inline-block;color:#6366f1;"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>Haftalık Arıza Trendi</span>
+              <span class="badge badge-gray" style="font-size:0.65rem;">Son 7 Gün</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="chartWeeklyTrend"></canvas>
+            </div>
+          </div>
+          <!-- Grafik 2: Aylık Trend -->
+          <div class="chart-card">
+            <div class="card-header" style="margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+              <span class="card-title" style="font-size:0.8rem; font-weight:700;"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;display:inline-block;color:#10b981;"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Aylık Arıza / Çözüm</span>
+              <span class="badge badge-gray" style="font-size:0.65rem;">Son 6 Ay</span>
+            </div>
+            <div class="chart-wrapper">
+              <canvas id="chartMonthlyCompare"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Varlıklar & Makineler ve WC Hijyen Durumu Grid -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          
+          <!-- PROTechnic Varlıklar & Makineler -->
+          <div class="module-section" style="margin-top:0;">
+            <div class="module-section-header">
+              <div class="module-section-title">
+                <div class="module-icon Asset"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: middle;"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="6" x2="12" y2="10"/><polyline points="9 8 12 6 15 8"/></svg></div>
+                PROTechnic — Endüstriyel Varlık Durumu
+              </div>
+              <a href="assets.html" class="btn btn-ghost btn-sm">Varlıklar & Makineler →</a>
+            </div>
+            <div class="Asset-mini-grid" id="AssetMiniGrid">
+              <div style="color:var(--text-muted);font-size:.8rem;">Yükleniyor...</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Aktivite feed -->
+        <div class="dash-bottom" style="grid-template-columns: 1fr;">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align: -2px; margin-right: 6px; display: inline-block;"><rect x="5" y="2" width="14" height="20" rx="2"/></svg>Endüstriyel Varlık & Saha Aktivite Akışı</span>
+            </div>
+            <div class="card-body" style="padding:8px 20px;">
+              <div class="activity-list" id="elevActivityList"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/sanitize.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/shell.js"></script>
+<script>if(CONFIG.MOCK_MODE){document.write('<script src="assets/js/mock.js"><\/script>')}</script>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/notify.js"></script>
+<script src="assets/js/dashboard.js"></script>
+</body>
+</html>
+

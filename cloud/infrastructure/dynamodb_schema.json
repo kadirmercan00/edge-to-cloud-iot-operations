@@ -1,0 +1,42 @@
+{
+  "tables": [
+    {
+      "TableName": "iot-asset-telemetry",
+      "KeySchema": [
+        { "AttributeName": "asset_id", "KeyType": "HASH" },
+        { "AttributeName": "timestamp", "KeyType": "RANGE" }
+      ],
+      "AttributeDefinitions": [
+        { "AttributeName": "asset_id", "AttributeType": "S" },
+        { "AttributeName": "timestamp", "AttributeType": "N" }
+      ],
+      "BillingMode": "PAY_PER_REQUEST",
+      "TimeToLiveSpecification": {
+        "AttributeName": "ttl",
+        "Enabled": true
+      }
+    },
+    {
+      "TableName": "iot-device-registry",
+      "KeySchema": [
+        { "AttributeName": "device_id", "KeyType": "HASH" }
+      ],
+      "AttributeDefinitions": [
+        { "AttributeName": "device_id", "AttributeType": "S" },
+        { "AttributeName": "facility_id", "AttributeType": "S" }
+      ],
+      "GlobalSecondaryIndexes": [
+        {
+          "IndexName": "FacilityIndex",
+          "KeySchema": [
+            { "AttributeName": "facility_id", "KeyType": "HASH" }
+          ],
+          "Projection": {
+            "ProjectionType": "ALL"
+          }
+        }
+      ],
+      "BillingMode": "PAY_PER_REQUEST"
+    }
+  ]
+}
