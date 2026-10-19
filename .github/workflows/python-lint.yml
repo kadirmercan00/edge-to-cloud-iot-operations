@@ -1,9 +1,10 @@
 name: Python Lint & Test
 on:
   push:
-    paths: ['cloud/**', 'ml/**', 'tools/**']
+    branches: [main]
   pull_request:
-    paths: ['cloud/**', 'ml/**', 'tools/**']
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   lint:
