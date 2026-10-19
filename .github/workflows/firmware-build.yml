@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         target: [anchor-unit, smart-card, ble-tof-gateway]
     steps:

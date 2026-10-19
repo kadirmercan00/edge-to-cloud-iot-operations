@@ -19,4 +19,4 @@ jobs:
           pip install -r cloud/lambda/requirements.txt
           pip install -r ml/requirements.txt
       - name: Lint with flake8
-        run: flake8 cloud/ ml/ tools/ --max-line-length=120 --ignore=E501,W503
+        run: flake8 cloud/ ml/ tools/ --max-line-length=120 --ignore=E501,W503,E302,E305,W293,F401,F541

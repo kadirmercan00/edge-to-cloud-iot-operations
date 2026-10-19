@@ -12,6 +12,7 @@
 #include <ArduinoJson.h>
 #include <HTTPUpdate.h>
 #include <NimBLEDevice.h>
+#include <NimBLEBeacon.h>
 #include <PubSubClient.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
@@ -48,6 +49,7 @@ BLEAdvertising* pAdvertising;
 void initBLEBeacon() {
     BLEDevice::init("ANCHOR");
     BLEServer* pServer = BLEDevice::createServer();
+    (void)pServer;
     pAdvertising = BLEDevice::getAdvertising();
 
     BLEBeacon beacon;
